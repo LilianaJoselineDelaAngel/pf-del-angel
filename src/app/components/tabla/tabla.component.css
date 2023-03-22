@@ -1,0 +1,16 @@
+.titulo {
+  text-align: center;
+}
+
+.deficiente {
+  color: red;
+}
+.promedio {
+  color: orange;
+}
+.aceptable {
+  color: green;
+}
+.nuevo {
+  text-align: right;
+}

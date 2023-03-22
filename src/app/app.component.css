@@ -1,0 +1,31 @@
+.titulo {
+  color: aliceblue;
+}
+
+.navbar {
+  background-color: #072f4a;
+  color: aliceblue;
+}
+
+.menuLateral {
+  background-color: #072f4a;
+}
+
+.nav-link {
+  color: aliceblue;
+  border: solid;
+  border-width: 1px 0;
+  border-color: rgb(11, 74, 116);
+}
+
+.active {
+  background-color: #041d2e;
+}
+
+.contenido {
+  padding: 50px 50px;
+  border-radius: 0;
+}
+.example-spacer {
+  flex: 1 1 auto;
+}

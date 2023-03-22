@@ -1,0 +1,15 @@
+.deficiente {
+  color: red;
+}
+.promedio {
+  color: orange;
+}
+.aceptable {
+  color: green;
+}
+.botones {
+  text-align: right;
+}
+.titulo {
+  text-align: center;
+}

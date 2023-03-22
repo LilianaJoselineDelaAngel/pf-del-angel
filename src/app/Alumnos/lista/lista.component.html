@@ -1,0 +1,46 @@
+<div class="contenido">
+  <h1 class="titulo">Lista de alumnos </h1>
+
+  <div class="row">
+    <div class="col-4" *ngFor="let alumnos of Alumnos$ | async ">
+      <div class="card">
+        <div class="card-header" style="text-align: center;">
+          <span [ngClass]="alumnos.asistencia === true ? 'asistencia': 'Noasistencia'">{{alumnos.nombre | uppercase}}
+            {{alumnos.apellidos | uppercase}}</span><br />
+        </div>
+        <div style="text-align: center;">
+          <img src="https://employyourself.nl/wp-content/uploads/Iconen-website-1-02-980x980.png" class="card-img-top"
+            style="width: 100px; height: 100px">
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{alumnos.curso}}</h5>
+          <label>Tareas: {{alumnos.tareas | number}} / {{alumnos.esperadas | number}}
+            <span *ngIf="alumnos.tareas <= 6 " class="deficiente"> las entregadas no cumplen con lo
+              esperado</span>
+            <span *ngIf="alumnos.tareas > 6 && alumnos.tareas <= 8 " class="promedio"> las entregas son
+              aceptables</span>
+            <span *ngIf="alumnos.tareas > 8 && alumnos.tareas <= 10 " class="aceptable"> las entregas son
+              excelentes</span>
+          </label><br>
+          <br>
+          <div class="botones">
+            <ng-container *ngIf="sesion$ | async as sesion">
+              <button mat-raised-button color="primary" (click)="editarAlumno(alumnos)"
+                *ngIf="sesion.usuarioActivo?.esAdmin">Editar</button>&nbsp;&nbsp;
+              <button mat-raised-button color="accent" (click)="eliminarAlumno(alumnos)"
+                *ngIf="sesion.usuarioActivo?.esAdmin">Eliminar</button>
+              <!--<a href="#" class="btn btn-info" (click)="editar(alumnos)">Editar</a>&nbsp;&nbsp;
+            <a href="#" class="btn btn-warning" (click)="eliminar(alumnos)">Eliminar</a>-->
+
+            </ng-container>
+
+          </div>
+
+        </div>
+      </div><br>
+    </div>
+  </div>
+
+</div>
+
+<!--<app-formulario *ngIf="seleccionado" [lista]="seleccionado" (closeModal)="editar(null)"></app-formulario>-->

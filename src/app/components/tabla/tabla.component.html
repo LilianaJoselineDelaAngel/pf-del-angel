@@ -1,0 +1,65 @@
+<div class="card">
+  <div class="card-header">
+    <h2 class="titulo">Alumnos</h2>
+  </div>
+  <div class="card-body">
+    <!-- <a href="#" class="btn btn-info" (click)="nuevo(dataSource.data)"><mat-icon>add</mat-icon> Nuevo</a>>-->
+    <!-- <div class="nuevo">
+      <button mat-raised-button color="primary" (click)="nuevo(vacio)"><mat-icon>add</mat-icon> Nuevo</button>
+      <br /><br />
+    </div> -->
+    <input type="text" class="form-control" placeholder="Buscar" id="Buscar" autocomplete="off"
+      (keyup)="filtrar($event)">
+    <br />
+
+    <div>
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" #tabla>
+        <ng-container matColumnDef="Acciones">
+          <th mat-header-cell *matHeaderCellDef> Acciones </th>
+          <td mat-cell *matCellDef="let element">
+
+            <!-- <a href="#" class="btn btn-warning" (click)="editar(element)"><mat-icon>edit</mat-icon></a>
+            <a href="#" class="btn btn-warning" (click)="eliminar(element)"><mat-icon>delete</mat-icon></a>-->
+
+            <button mat-raised-button color="primary"
+              (click)="editar(element)"><mat-icon>edit</mat-icon></button>&nbsp;&nbsp;
+            <button mat-raised-button color="accent" (click)="eliminar(element)"><mat-icon>delete</mat-icon></button>
+
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef> nombre </th>
+          <td mat-cell *matCellDef="let element"> {{element.nombre}} {{element.apellidos}}</td>
+        </ng-container>
+        <ng-container matColumnDef="curso">
+          <th mat-header-cell *matHeaderCellDef> curso </th>
+          <td mat-cell *matCellDef="let element"> {{element.curso}} </td>
+        </ng-container>
+        <ng-container matColumnDef="tareas">
+          <th mat-header-cell *matHeaderCellDef> tareas </th>
+          <td mat-cell *matCellDef="let element"> {{element.tareas| number}} / {{element.esperadas| number}}
+            <br />
+            <span *ngIf="element.tareas <= 6 " class="deficiente"> las entregadas no cumplen con lo
+              esperado</span>
+            <span *ngIf="element.tareas > 6 && element.tareas <= 8 " class="promedio"> las entregas son
+              aceptables</span>
+            <span *ngIf="element.tareas > 8 && element.tareas <= 10 " class="aceptable"> las entregas son
+              excelentes</span>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="asistencia">
+          <th mat-header-cell *matHeaderCellDef> asistencia </th>
+          <td mat-cell *matCellDef="let element">
+            <span *ngIf="element.asistencia === true" class="aceptable"><mat-icon>check</mat-icon></span>
+            <span *ngIf="element.asistencia === false" class="deficiente"><mat-icon>close</mat-icon></span>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+        <tr mat-row *matRowDef="let row; columns:columnas "></tr>
+      </table>
+
+    </div>
+    <!--<app-formulario *ngIf="seleccionado" [element]="seleccionado" (closeModal)="editar(null)"></app-formulario>-->
+
+  </div>
+</div>
