@@ -1,21 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormularioComponent } from './formulario.component';
+import { AgregarComponent } from './agregar.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
-describe('FormularioComponent', () => {
-  let component: FormularioComponent;
-  let fixture: ComponentFixture<FormularioComponent>;
+describe('AgregarComponent', () => {
+  let component: AgregarComponent;
+  let fixture: ComponentFixture<AgregarComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FormularioComponent],
+      declarations: [AgregarComponent],
       providers: [
         { provide: MatDialog, usevalue: {} },
         { provide: MatDialogRef, usevalue: {} },
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(FormularioComponent);
+    fixture = TestBed.createComponent(AgregarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormularioComponent } from './Alumnos/formulario/formulario.component';
+//import { FormularioComponent } from './Alumnos/formulario/formulario.component';
 import { AlumnoListaService } from './services/alumno-lista.service';
 import {
   MatDialog,
@@ -12,6 +12,7 @@ import { Observable, Subscription } from 'rxjs';
 import { Alumnos } from './models/alumnos';
 import { Sesion } from './models/sesion';
 import { SesionService } from './core/services/sesion.service';
+import { AgregarComponent } from './Alumnos/agregar/agregar.component';
 
 @Component({
   selector: 'app-root',
@@ -72,7 +73,7 @@ export class AppComponent implements OnInit {
 
     this.dataSource.data.push(alumn);
     console.log(alumn);
-    const dialogRef = this.dialog.open(FormularioComponent, {
+    const dialogRef = this.dialog.open(AgregarComponent, {
       data: alumn,
     });
     // this.tabla.renderRows();

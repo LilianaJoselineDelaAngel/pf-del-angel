@@ -16,8 +16,8 @@
             class="d-inline-block align-text-top"><label class="titulo">&nbsp;&nbsp;ALUMNOS</label></span>
         <span class="example-spacer"></span>
         <button mat-button (click)="irinicio()"><mat-icon>home</mat-icon>&nbsp;&nbsp;Inicio</button>
-        <a mat-button routerLink="vistas/tabla"><mat-icon>table</mat-icon>&nbsp;&nbsp;Tabla</a>
         <a mat-button routerLink="vistas/lista"><mat-icon>list</mat-icon>&nbsp;&nbsp;Lista</a>
+        <a mat-button routerLink="vistas/tabla"><mat-icon>table</mat-icon>&nbsp;&nbsp;Tabla</a>
         <button mat-button (click)="formulario(vacio)" *ngIf="sesion.usuarioActivo?.esAdmin"><mat-icon>add</mat-icon>
           Nuevo</button>
 
@@ -28,36 +28,6 @@
       <router-outlet></router-outlet>
     </div>
 
-    <!-- <nav class="navbar ">
-      <nav class="navbar bg-body-tertiary">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">
-            <img src="https://cdn-icons-png.flaticon.com/512/855/855601.png" alt="Logo" width="35" height="30"
-              class="d-inline-block align-text-top">
-            <label class="titulo">&nbsp;&nbsp;ALUMNOS</label>
-          </a>
-        </div>
-      </nav>
-    </nav>
-
-    <div class=" row">
-      <div class="col-xl-2 col-lg-2 col-md-3 col-sm-3 col-xs-3  col-3 menuLateral">
-        <nav class="nav flex-column">
-          <a class="nav-link active" href="#"><mat-icon>home</mat-icon>&nbsp;&nbsp;Inicio</a>
-          <a class="nav-link " href="#"><mat-icon>table</mat-icon>&nbsp;&nbsp;Tabla</a>
-          <a class="nav-link " href="#"><mat-icon>list</mat-icon>&nbsp;&nbsp;Lista</a>
-        </nav>
-      </div>
-      <div class="col-xl-10 col-lg-10 col-md-9 col-sm-9 col-xs-9  col-9">
-        <div class="contenido">
-          <app-tabla></app-tabla>
-           <app-lista></app-lista>
-           <app-inicio></app-inicio>
-          <app-pagina-no-encontrada></app-pagina-no-encontrada>
-        </div>
-
-      </div>
-    </div> -->
 
   </body>
 

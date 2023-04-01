@@ -16,6 +16,9 @@ import { Observable, Subscription } from 'rxjs';
   styleUrls: ['./tabla.component.css'],
 })
 export class TablaComponent {
+  Alumnos!: Alumnos;
+  Alumnos$!: Observable<Alumnos[]>;
+
   dataSource!: MatTableDataSource<Alumnos>;
   suscripcion!: Subscription;
   //dialog: any;
@@ -32,19 +35,21 @@ export class TablaComponent {
           this.dataSource.data = alumn;
         }
       );
-
-    //this.AlumnoListaService.obtenerAlumnosObservable().subscribe(
-    //  (Alumnos: Alumnos[]) => {
-    //  this.dataSource.data = Alumnos;
-    // }
-    //);
   }
   ngOnDestroy(): void {
     this.suscripcion.unsubscribe();
   }
-  //@ViewChild(MatTable) tabla!: MatTable<Alumnos>;
+  @ViewChild(MatTable) tabla!: MatTable<Alumnos>;
 
   columnas: string[] = ['Acciones', 'nombre', 'curso', 'tareas', 'asistencia'];
+
+  eliminar(alumn: Alumnos) {
+    this.AlumnoListaService.eliminar(alumn).subscribe((alumn: Alumnos) => {
+      alert(`${alumn.nombre} eliminado`);
+      this.Alumnos$ = this.AlumnoListaService.obtenerAlumnosObservable();
+    });
+    this.tabla.renderRows();
+  }
 
   // seleccionado = null;
   // editar(alumn: any) {
@@ -59,10 +64,10 @@ export class TablaComponent {
     //this.tabla.renderRows();
   }
 
-  eliminar(alumn: any) {
-    this.AlumnoListaService.eliminar(alumn);
-    //this.tabla.renderRows();
-  }
+  // eliminar(alumn: any) {
+  //   this.AlumnoListaService.eliminar(alumn);
+  //   //this.tabla.renderRows();
+  // }
 
   vacio = {
     nombre: '',
@@ -92,8 +97,8 @@ export class TablaComponent {
     };
   }
 
-  filtrar(event: Event) {
-    let word = (event.target as HTMLInputElement).value;
-    this.AlumnoListaService.buscar(word);
-  }
+  // filtrar(event: Event) {
+  //   let word = (event.target as HTMLInputElement).value;
+  //   this.AlumnoListaService.buscar(word);
+  // }
 }

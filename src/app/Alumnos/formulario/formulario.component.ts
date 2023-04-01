@@ -15,7 +15,10 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
-//import { ListaComponent } from '../lista/lista.component';
+import { Router } from '@angular/router';
+import { ProfesorService } from 'src/app/core/services/profesor.service';
+
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-formulario',
@@ -23,10 +26,16 @@ import {
   styleUrls: ['./formulario.component.css'],
 })
 export class FormularioComponent {
+  Alumnos$!: Observable<Alumnos[]>;
   dataSource!: MatTableDataSource<Alumnos>;
+  formulario!: FormGroup;
+  suscripcion!: Subscription;
   constructor(
     public dialogRef: MatDialogRef<FormularioComponent>,
     private AlumnoListaService: AlumnoListaService,
+    private router: Router,
+    private proferes: ProfesorService,
+
     @Inject(MAT_DIALOG_DATA) public data: Alumnos
   ) {
     let controles: any = {
@@ -45,6 +54,8 @@ export class FormularioComponent {
   }
 
   ngOnInit(): void {
+    this.Alumnos$ = this.AlumnoListaService.obtenerAlumnosObservable();
+
     this.dataSource = new MatTableDataSource<Alumnos>();
     this.AlumnoListaService.obtenerAlumnosObservable().subscribe(
       (Alumnos: Alumnos[]) => {
@@ -52,64 +63,24 @@ export class FormularioComponent {
       }
     );
   }
-
-  formulario: FormGroup;
-  Mensaje: string = '';
-
-  //@Input() lista: any;
-  //@Output() closeModal = new EventEmitter();
-
-  // onCloseModal(): void {
-  //   this.closeModal.emit();
-  // }
-
   enviar(alumn: any) {
-    this.AlumnoListaService.editar(alumn, this.formulario.controls);
-
-    //console.log('enviar', alumn);
-    //console.log(this.dataSource.data);
-    ///console.log(this.formulario);
-
-    // //this.dataSource.data.nombre = this.formulario.controls['nombre'].value;
-    // //this.dataSource.data.apellidos =
-    // // this.formulario.controls['apellidos'].value;
-    // // this.dataSource.data.curso = this.formulario.controls['curso'].value;
-    // //this.dataSource.data.tareas = this.formulario.controls['tareas'].value;
-    // let Nombre = this.formulario.controls['nombre'].value;
-    // let apellidos = this.formulario.controls['apellidos'].value;
-    // let curso = this.formulario.controls['curso'].value;
-    // let tareas = this.formulario.controls['tareas'].value;
-
-    // var Aux = this.dataSource.data;
-    // console.log(this.dataSource.data);
-    // Aux.forEach(function (currentValue, index, arr) {
-    //   if (Aux[index] == alumn) {
-    //     Aux[index].nombre = Nombre;
-    //     Aux[index].apellidos = apellidos;
-    //     Aux[index].curso = curso;
-    //     Aux[index].tareas = tareas;
-    //   }
-    // });
-    // this.dataSource.data = Aux;
-    // //  this.tabla.renderRows();
-    // this.formulario.reset({
-    //   nombre: '',
-    //   apellidos: '',
-    //   curso: '',
-    //   tareas: '',
-    // });
-  }
-
-  nuevo() {
-    this.dataSource.data.push({
-      nombre: this.formulario.controls['nombre'].value,
-      apellidos: this.formulario.controls['apellidos'].value,
-      curso: this.formulario.controls['curso'].value,
-      tareas: this.formulario.controls['tareas'].value,
+    let alumno: Alumnos = {
+      id: alumn.id,
+      //id: this.formulario.value.id,
+      nombre: this.formulario.value.nombre,
+      apellidos: this.formulario.value.apellidos,
+      curso: this.formulario.value.curso,
+      tareas: this.formulario.value.tareas,
       esperadas: 10,
       asistencia: true,
+    };
+    console.log(alumno, ' nuevo');
+
+    this.AlumnoListaService.editar(alumno).subscribe((alumn: Alumnos) => {
+      this.Alumnos$ = this.AlumnoListaService.obtenerAlumnosObservable();
+      alert(`se actualizo: ${alumno.nombre}`);
+      this.router.navigate(['vistas/tabla']);
+      this.router.navigate(['vistas/lista']);
     });
-    console.log(this.dataSource.data);
-    // this.tabla.renderRows();
   }
 }

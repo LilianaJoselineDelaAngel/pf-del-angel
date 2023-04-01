@@ -12,6 +12,7 @@ import { Observable, Subscription } from 'rxjs';
 import { Sesion } from 'src/app/models/sesion';
 import { SesionService } from '../../core/services/sesion.service';
 import { Router } from '@angular/router';
+import { Curso } from '../../models/cursos';
 
 @Component({
   selector: 'app-lista',
@@ -43,13 +44,15 @@ export class ListaComponent {
 
       this.sesion$ = this.sesion.obtenerSesion();
     });
-    //this.dataSource = new MatTableDataSource<Alumnos>();
-    //this.AlumnoListaService.obtenerAlumnosObservable().subscribe(
-    //  (Alumnos: Alumnos[]) => {
-    //    this.dataSource.data = Alumnos;
-    //  }
-    // );
   }
+
+  eliminarAlumno(alumn: Alumnos) {
+    this.AlumnoListaService.eliminar(alumn).subscribe((alumn: Alumnos) => {
+      alert(`${alumn.nombre} eliminado`);
+      this.Alumnos$ = this.AlumnoListaService.obtenerAlumnosObservable();
+    });
+  }
+
   //@ViewChild(MatTable) tabla!: MatTable<Alumnos>;
   // ngOnDestroy(): void {
   //   this.suscripcion.unsubscribe();
@@ -60,9 +63,6 @@ export class ListaComponent {
     const dialogRef = this.dialog.open(FormularioComponent, {
       data: alumn,
     });
-  }
-
-  eliminarAlumno(alumn: any) {
-    this.AlumnoListaService.eliminar(alumn);
+    this.Alumnos$ = this.AlumnoListaService.obtenerAlumnosObservable();
   }
 }

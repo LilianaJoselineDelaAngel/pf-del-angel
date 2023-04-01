@@ -5,7 +5,7 @@
       <div class="card">
         <div class="card-body">
           <div class="right"><button mat-dialog-close="">X</button></div>
-          <h1 class="titulo">Alumno</h1>
+          <h1 class="titulo">Agregar Alumno</h1>
           <hr>
           <!--<h1 mat-dialog-title>Alumno</h1>-->
           <div mat-dialog-content>
@@ -14,17 +14,9 @@
                 <div class=" col-12">
                   <div class="mb-3">
                     <!-- <p>{{data |json}}</p>-->
-                    <label formControlName="id" id="id" class="form-label collapse">{{data.id}}</label>
-
                     <label for="Nombre" class="form-label">Nombre(s)</label>
                     <input formControlName="nombre" type="text" class="form-control" placeholder="Nombre" id="Nombre"
                       aria-describedby="Nombre" autocomplete="off">
-                    <div class="invalid" *ngIf="formulario.controls['nombre'].errors?.['required'] ">
-                      ingrese un nombre
-                    </div>
-                    <div class="invalid" *ngIf="formulario.controls['nombre'].errors?.['pattern'] ">
-                      Los caracteres no son validos
-                    </div>
                   </div>
                 </div>
                 <div class=" col-12">
@@ -32,8 +24,6 @@
                     <label for="Apellidos" class="form-label">Apellidos</label>
                     <input formControlName="apellidos" type="text" class="form-control" placeholder="Apellidos"
                       id="Apellidos" aria-describedby="Apellidos" autocomplete="off">
-                    <div class="invalid" *ngIf="formulario.controls['apellidos'].errors?.['required'] ">
-                      Ingrese su apellido</div>
                   </div>
                 </div>
                 <div class=" col-12">
@@ -64,7 +54,7 @@
             <button mat-dialog-close="" type="button" class="btn btn-secondary" data-bs-dismiss="modal">
               <mat-icon>close</mat-icon>&nbsp;Cerrar
             </button>&nbsp;&nbsp;
-            <button mat-dialog-close="" type="button" class="btn btn-success" (click)="enviar(data)">
+            <button mat-dialog-close="" type="button" class="btn btn-success" (click)="agregar()">
               <mat-icon>save</mat-icon>&nbsp;Guardar
             </button>&nbsp;&nbsp;
             <!--<button mat-dialog-close="" type="button" class="btn btn-success" (click)="nuevo()" (click)="enviar(data)">
