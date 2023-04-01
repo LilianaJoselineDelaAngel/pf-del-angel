@@ -13,6 +13,10 @@ import { Alumnos } from './models/alumnos';
 import { Sesion } from './models/sesion';
 import { SesionService } from './core/services/sesion.service';
 import { AgregarComponent } from './Alumnos/agregar/agregar.component';
+import { AppState } from './core/state/app.state';
+import { Store } from '@ngrx/store';
+import { alumnosCargados, cargarAlumnos } from './core/state/alumnos.action';
+import { selectorAlumnosCargados } from './core/state/alumnos.selectors';
 
 @Component({
   selector: 'app-root',
@@ -23,6 +27,7 @@ export class AppComponent implements OnInit {
   dataSource!: MatTableDataSource<Alumnos>;
   suscripcion!: Subscription;
   sesion$!: Observable<Sesion>;
+  Alumnos$!: Observable<Alumnos[]>;
 
   //dialog: any;
   constructor(
@@ -30,10 +35,18 @@ export class AppComponent implements OnInit {
     private dialog: MatDialog, // public dialog: MatDialog
 
     private router: Router,
-    private sesion: SesionService
+    private sesion: SesionService,
+    private store: Store<AppState>
   ) {}
 
   ngOnInit(): void {
+    this.store.dispatch(cargarAlumnos());
+    this.AlumnoListaService.obtenerAlumnosObservable().subscribe(
+      (alumnos: Alumnos[]) => {
+        this.store.dispatch(alumnosCargados({ alumnos: alumnos }));
+      }
+    );
+
     this.dataSource = new MatTableDataSource<Alumnos>();
     this.suscripcion =
       this.AlumnoListaService.obtenerAlumnosObservable().subscribe(

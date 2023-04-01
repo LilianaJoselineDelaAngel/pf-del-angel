@@ -17,6 +17,8 @@ import { AutenticacionRoutingModule } from './autenticacion/autenticacion-routin
 import { MaterialModule } from './material.module';
 import { CoreModule } from './core/core.module';
 import { AgregarComponent } from './Alumnos/agregar/agregar.component';
+import { StoreModule } from '@ngrx/store';
+import { ROOT_REDUCERS } from './core/state/app.state';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,7 @@ import { AgregarComponent } from './Alumnos/agregar/agregar.component';
     AutenticacionRoutingModule,
     MaterialModule,
     CoreModule,
+    StoreModule.forRoot(ROOT_REDUCERS),
   ],
 
   exports: [MaterialModule],

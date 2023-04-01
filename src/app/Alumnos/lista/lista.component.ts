@@ -13,6 +13,13 @@ import { Sesion } from 'src/app/models/sesion';
 import { SesionService } from '../../core/services/sesion.service';
 import { Router } from '@angular/router';
 import { Curso } from '../../models/cursos';
+import { AppState } from 'src/app/core/state/app.state';
+import { Store } from '@ngrx/store';
+import {
+  alumnosCargados,
+  cargarAlumnos,
+} from 'src/app/core/state/alumnos.action';
+import { selectorAlumnosCargados } from 'src/app/core/state/alumnos.selectors';
 
 @Component({
   selector: 'app-lista',
@@ -30,18 +37,19 @@ export class ListaComponent {
     private AlumnoListaService: AlumnoListaService,
     public dialog: MatDialog, // public dialog: MatDialog
     private sesion: SesionService, //sesion
-    private router: Router
+    private router: Router,
+    private store: Store<AppState>
   ) {}
 
   ngOnInit(): void {
-    this.Alumnos$ = this.AlumnoListaService.obtenerAlumnosObservable();
+    this.Alumnos$ = this.store.select(selectorAlumnosCargados);
+    // this.Alumnos$ = this.AlumnoListaService.obtenerAlumnosObservable();
     //estado de la sesion
     this.sesion.obtenerSesion().subscribe((sesion: Sesion) => {
       console.log('Estado de la sesion', sesion);
       if (!sesion.sesionActiva) {
         this.router.navigate(['auth/login']); //manda al login
       }
-
       this.sesion$ = this.sesion.obtenerSesion();
     });
   }
@@ -53,11 +61,6 @@ export class ListaComponent {
     });
   }
 
-  //@ViewChild(MatTable) tabla!: MatTable<Alumnos>;
-  // ngOnDestroy(): void {
-  //   this.suscripcion.unsubscribe();
-  // }
-  //seleccionado = null;
   editarAlumno(alumn: any) {
     console.log('lista comp', alumn);
     const dialogRef = this.dialog.open(FormularioComponent, {
