@@ -8,4 +8,11 @@ import { MaterialModule } from '../material.module';
   imports: [CommonModule, ReactiveFormsModule, MaterialModule],
   exports: [CommonModule, ReactiveFormsModule, MaterialModule],
 })
-export class SharedModule {}
+export class SharedModule {
+  // static forFeature(arg0: {}):
+  //   | any[]
+  //   | import('@angular/core').Type<any>
+  //   | import('@angular/core').ModuleWithProviders<{}> {
+  //   throw new Error('Method not implemented.');
+  // }
+}

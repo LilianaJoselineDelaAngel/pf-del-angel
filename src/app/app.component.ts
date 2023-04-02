@@ -13,10 +13,9 @@ import { Alumnos } from './models/alumnos';
 import { Sesion } from './models/sesion';
 import { SesionService } from './core/services/sesion.service';
 import { AgregarComponent } from './Alumnos/agregar/agregar.component';
-import { AppState } from './core/state/app.state';
 import { Store } from '@ngrx/store';
-import { alumnosCargados, cargarAlumnos } from './core/state/alumnos.action';
-import { selectorAlumnosCargados } from './core/state/alumnos.selectors';
+import { selectUsuarioState } from './autenticacion/state/auth.selectors';
+import { AuthState } from './autenticacion/state/auth.reducer';
 
 @Component({
   selector: 'app-root',
@@ -26,7 +25,7 @@ import { selectorAlumnosCargados } from './core/state/alumnos.selectors';
 export class AppComponent implements OnInit {
   dataSource!: MatTableDataSource<Alumnos>;
   suscripcion!: Subscription;
-  sesion$!: Observable<Sesion>;
+  sesion$!: Observable<boolean>;
   Alumnos$!: Observable<Alumnos[]>;
 
   //dialog: any;
@@ -36,17 +35,12 @@ export class AppComponent implements OnInit {
 
     private router: Router,
     private sesion: SesionService,
-    private store: Store<AppState>
+    //private store: Store<AppState>,
+
+    private authStore: Store<AuthState>
   ) {}
 
   ngOnInit(): void {
-    this.store.dispatch(cargarAlumnos());
-    this.AlumnoListaService.obtenerAlumnosObservable().subscribe(
-      (alumnos: Alumnos[]) => {
-        this.store.dispatch(alumnosCargados({ alumnos: alumnos }));
-      }
-    );
-
     this.dataSource = new MatTableDataSource<Alumnos>();
     this.suscripcion =
       this.AlumnoListaService.obtenerAlumnosObservable().subscribe(
@@ -55,7 +49,17 @@ export class AppComponent implements OnInit {
         }
       );
 
-    this.sesion$ = this.sesion.obtenerSesion();
+    this.sesion$ = this.authStore.select(selectUsuarioState);
+
+    // this.dataSource = new MatTableDataSource<Alumnos>();
+    // this.suscripcion =
+    //   this.AlumnoListaService.obtenerAlumnosObservable().subscribe(
+    //     (alumn: Alumnos[]) => {
+    //       this.dataSource.data = alumn;
+    //     }
+    //   );
+
+    // this.sesion$ = this.sesion.obtenerSesion();
     //this.AlumnoListaService.obtenerAlumnosObservable().subscribe(
     //  (Alumnos: Alumnos[]) => {
     //  this.dataSource.data = Alumnos;

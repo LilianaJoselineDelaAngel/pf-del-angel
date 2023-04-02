@@ -10,16 +10,16 @@
 
   <body>
     <ng-container *ngIf="sesion$ | async as sesion">
-      <mat-toolbar color="" *ngIf="sesion.sesionActiva">
-
+      <!-- <mat-toolbar color="" *ngIf="sesion.sesionActiva"><mat-toolbar color="" *ngIf="sesion.sesionActiva"> -->
+      <mat-toolbar color="">
         <span><img src="https://cdn-icons-png.flaticon.com/512/855/855601.png" alt="Logo" width="35" height="30"
             class="d-inline-block align-text-top"><label class="titulo">&nbsp;&nbsp;ALUMNOS</label></span>
         <span class="example-spacer"></span>
         <button mat-button (click)="irinicio()"><mat-icon>home</mat-icon>&nbsp;&nbsp;Inicio</button>
         <a mat-button routerLink="vistas/lista"><mat-icon>list</mat-icon>&nbsp;&nbsp;Lista</a>
         <a mat-button routerLink="vistas/tabla"><mat-icon>table</mat-icon>&nbsp;&nbsp;Tabla</a>
-        <button mat-button (click)="formulario(vacio)" *ngIf="sesion.usuarioActivo?.esAdmin"><mat-icon>add</mat-icon>
-          Nuevo</button>
+        <!-- <button mat-button (click)="formulario(vacio)" *ngIf="sesion.usuarioActivo?.esAdmin"><mat-icon>add</mat-icon>
+          Nuevo</button> -->
 
         <a mat-button (click)="salir()"><mat-icon>close</mat-icon>&nbsp;&nbsp;Cerrar sesion</a>
       </mat-toolbar>

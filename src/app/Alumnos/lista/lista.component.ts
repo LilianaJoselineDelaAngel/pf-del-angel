@@ -13,13 +13,13 @@ import { Sesion } from 'src/app/models/sesion';
 import { SesionService } from '../../core/services/sesion.service';
 import { Router } from '@angular/router';
 import { Curso } from '../../models/cursos';
-import { AppState } from 'src/app/core/state/app.state';
 import { Store } from '@ngrx/store';
 import {
-  alumnosCargados,
-  cargarAlumnos,
-} from 'src/app/core/state/alumnos.action';
-import { selectorAlumnosCargados } from 'src/app/core/state/alumnos.selectors';
+  selectAlumnosCargados,
+  selectCargandoAlumnos,
+} from '../alumnos-state.selectors';
+import { alumnosCargados, cargarAlumnosStates } from '../alumnos-state.actions';
+import { AlumnoState } from '../alumnos-state.reducer';
 
 @Component({
   selector: 'app-lista',
@@ -30,6 +30,7 @@ export class ListaComponent {
   Alumnos!: Alumnos;
   Alumnos$!: Observable<Alumnos[]>;
   sesion$!: Observable<Sesion>;
+  cargando$!: Observable<boolean>;
 
   // suscripcion!: Subscription;
   //dataSource!: MatTableDataSource<Alumnos>;
@@ -38,11 +39,21 @@ export class ListaComponent {
     public dialog: MatDialog, // public dialog: MatDialog
     private sesion: SesionService, //sesion
     private router: Router,
-    private store: Store<AppState>
+    private store: Store<AlumnoState>
   ) {}
 
   ngOnInit(): void {
-    this.Alumnos$ = this.store.select(selectorAlumnosCargados);
+    this.cargando$ = this.store.select(selectCargandoAlumnos);
+    // console.log('cargando', this.cargando$);
+    this.store.dispatch(cargarAlumnosStates());
+
+    this.AlumnoListaService.obtenerAlumnosObservable().subscribe(
+      (alumnos: Alumnos[]) => {
+        this.store.dispatch(alumnosCargados({ alumnos: alumnos }));
+      }
+    );
+
+    this.Alumnos$ = this.store.select(selectAlumnosCargados);
     // this.Alumnos$ = this.AlumnoListaService.obtenerAlumnosObservable();
     //estado de la sesion
     this.sesion.obtenerSesion().subscribe((sesion: Sesion) => {

@@ -30,6 +30,12 @@ import { InicioComponent } from '../components/inicio/inicio.component';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
+
+    BrowserModule,
+    BrowserAnimationsModule,
+    SharedModule,
+    RouterModule,
+    CommonModule,
   ],
   providers: [],
 })

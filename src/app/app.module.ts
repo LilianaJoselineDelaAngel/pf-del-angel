@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { ListaComponent } from './Alumnos/lista/lista.component';
@@ -18,7 +18,9 @@ import { MaterialModule } from './material.module';
 import { CoreModule } from './core/core.module';
 import { AgregarComponent } from './Alumnos/agregar/agregar.component';
 import { StoreModule } from '@ngrx/store';
-import { ROOT_REDUCERS } from './core/state/app.state';
+// import { ROOT_REDUCERS } from './core/state/app.state';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { DetalleComponent } from './components/detalle/detalle.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,7 @@ import { ROOT_REDUCERS } from './core/state/app.state';
     FormularioComponent,
     TablaComponent,
     AgregarComponent,
+    DetalleComponent,
   ],
   imports: [
     NgbModule,
@@ -36,7 +39,8 @@ import { ROOT_REDUCERS } from './core/state/app.state';
     AutenticacionRoutingModule,
     MaterialModule,
     CoreModule,
-    StoreModule.forRoot(ROOT_REDUCERS),
+    StoreModule.forRoot({}, {}),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
   ],
 
   exports: [MaterialModule],
