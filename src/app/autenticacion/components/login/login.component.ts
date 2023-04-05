@@ -23,15 +23,17 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private loginService: LoginService,
     private router: Router,
-    private authStore: Store<AuthState>
-  ) //private alumnosStore: Store<AlumnoState>
-  {}
+    private authStore: Store<AuthState> //private alumnosStore: Store<AlumnoState>
+  ) {
+    //console.log('authStore', authStore);
+  }
   ngOnInit(): void {
     this.formulario = new FormGroup({
-      usuario: new FormControl(),
-      contrasena: new FormControl(),
-      esAdmin: new FormControl(false),
+      usuario: new FormControl('Administrador'),
+      contrasena: new FormControl('Adm246'),
+      esAdmin: new FormControl(true),
     });
+    console.log('authStore', this.authStore);
   }
 
   ngOnDestroy(): void {
@@ -50,5 +52,6 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.authStore.dispatch(cargarSesion({ sesion: sesion }));
         this.router.navigate(['inicio']);
       });
+    console.log('usuario', usuario);
   }
 }

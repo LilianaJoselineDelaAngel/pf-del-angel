@@ -14,8 +14,13 @@ import { Sesion } from './models/sesion';
 import { SesionService } from './core/services/sesion.service';
 import { AgregarComponent } from './Alumnos/agregar/agregar.component';
 import { Store } from '@ngrx/store';
-import { selectUsuarioState } from './autenticacion/state/auth.selectors';
+import {
+  selectSesionActiva,
+  selectSesionState,
+  selectUsuarioActivo,
+} from './autenticacion/state/auth.selectors';
 import { AuthState } from './autenticacion/state/auth.reducer';
+import { Usuario } from './models/usuario';
 
 @Component({
   selector: 'app-root',
@@ -25,8 +30,11 @@ import { AuthState } from './autenticacion/state/auth.reducer';
 export class AppComponent implements OnInit {
   dataSource!: MatTableDataSource<Alumnos>;
   suscripcion!: Subscription;
-  sesion$!: Observable<boolean>;
   Alumnos$!: Observable<Alumnos[]>;
+
+  //sesion$!: Observable<boolean>;
+  sesionActiva$!: Observable<Boolean>;
+  usuarioActivo$!: Observable<Usuario | null>;
 
   //dialog: any;
   constructor(
@@ -41,6 +49,10 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.sesionActiva$ = this.authStore.select(selectSesionActiva);
+    //this.usuarioActivo$ = this.authStore.select(selectUsuarioActivo);
+    // this.sesion$ = this.authStore.select(selectSesionActiva);
+
     this.dataSource = new MatTableDataSource<Alumnos>();
     this.suscripcion =
       this.AlumnoListaService.obtenerAlumnosObservable().subscribe(
@@ -48,8 +60,6 @@ export class AppComponent implements OnInit {
           this.dataSource.data = alumn;
         }
       );
-
-    this.sesion$ = this.authStore.select(selectUsuarioState);
 
     // this.dataSource = new MatTableDataSource<Alumnos>();
     // this.suscripcion =
@@ -67,56 +77,37 @@ export class AppComponent implements OnInit {
     //);
   }
 
-  title = '1PF-Del-Angel';
+  title = 'pf-del-angel';
 
   nvo = null;
   location: any;
+
+  formulario() {
+    // this.router.navigate(['formulario', { mensaje: 'formulario' }]);
+
+    // this.dataSource.data.push(alumn);
+    // console.log(alumn);
+    const dialogRef = this.dialog.open(AgregarComponent, {
+      // data: alumn,
+    });
+  }
 
   nuevo(alumn: any) {
     this.nvo = alumn;
   }
 
-  vacio = {
-    nombre: '',
-    apellidos: '',
-    curso: '',
-    tareas: 0,
-    esperadas: 10,
-    asistencia: true,
-  };
-
-  formulario(alumn: any) {
-    this.router.navigate(['formulario', { mensaje: 'formulario' }]);
-
-    this.dataSource.data.push(alumn);
-    console.log(alumn);
-    const dialogRef = this.dialog.open(AgregarComponent, {
-      data: alumn,
-    });
-    // this.tabla.renderRows();
-
-    //limpia los campos para el registro siguiente
-    this.vacio = {
-      nombre: '',
-      apellidos: '',
-      curso: '',
-      tareas: 0,
-      esperadas: 10,
-      asistencia: true,
-    };
-  }
-
   irinicio() {
-    console.log('inicio');
+    let sesion: Sesion = {
+      sesionActiva: true,
+      //usuarioActivo: undefined,
+    };
     this.router.navigate(['inicio', { mensaje: 'inicio' }]);
   }
-  tabla() {
-    console.log('tabla');
-    this.router.navigate(['tabla']);
-  }
+
   salir() {
     let sesionSalir: Sesion = {
       sesionActiva: false,
+      usuarioActivo: undefined,
     };
     this.sesion.salir(sesionSalir);
     this.router.navigate(['auth/login']);

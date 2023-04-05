@@ -21,6 +21,7 @@ import { StoreModule } from '@ngrx/store';
 // import { ROOT_REDUCERS } from './core/state/app.state';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { DetalleComponent } from './components/detalle/detalle.component';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { DetalleComponent } from './components/detalle/detalle.component';
     CoreModule,
     StoreModule.forRoot({}, {}),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+    EffectsModule.forRoot([]),
   ],
 
   exports: [MaterialModule],
