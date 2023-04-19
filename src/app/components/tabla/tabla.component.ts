@@ -23,10 +23,9 @@ export class TablaComponent {
 
   dataSource!: MatTableDataSource<Alumnos>;
   suscripcion!: Subscription;
-  //dialog: any;
   constructor(
     private AlumnoListaService: AlumnoListaService,
-    private dialog: MatDialog // public dialog: MatDialog
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -53,21 +52,10 @@ export class TablaComponent {
     this.tabla.renderRows();
   }
 
-  // seleccionado = null;
-  // editar(alumn: any) {
-  //   this.seleccionado = alumn;
-  //}
-
   editar(alumn: Alumnos) {
-    console.log(alumn);
     const dialogRef = this.dialog.open(FormularioComponent, {
       data: alumn,
     });
-    //this.tabla.renderRows();
+    this.tabla.renderRows();
   }
-
-  // filtrar(event: Event) {
-  //   let word = (event.target as HTMLInputElement).value;
-  //   this.AlumnoListaService.buscar(word);
-  // }
 }

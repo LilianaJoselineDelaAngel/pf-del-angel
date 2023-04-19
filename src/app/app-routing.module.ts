@@ -32,25 +32,13 @@ const routes: Routes = [
   },
 
   {
-    path: 'tabla',
-    canActivate: [SesionGuard],
-    component: TablaComponent,
+    path: 'vistas',
+    canActivateChild: [SesionGuard],
+    children: [
+      { path: 'tabla', component: TablaComponent },
+      { path: 'lista', component: ListaComponent },
+    ],
   },
-  {
-    path: 'lista',
-    canActivate: [SesionGuard],
-    component: ListaComponent,
-  },
-
-  // canActivateChild: [SesionGuard], evita la carga del modulo
-  // {
-  //   path: 'vistas',
-  //   canActivateChild: [SesionGuard],
-  //   children: [
-  //     { path: 'tabla', component: TablaComponent },
-  //     { path: 'lista', component: ListaComponent },
-  //   ],
-  // },
 
   { path: '**', component: PaginaNoEncontradaComponent },
 ];

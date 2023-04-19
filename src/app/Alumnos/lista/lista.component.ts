@@ -20,6 +20,8 @@ import {
 } from '../alumnos-state.selectors';
 import { alumnosCargados, cargarAlumnosStates } from '../alumnos-state.actions';
 import { AlumnoState } from '../alumnos-state.reducer';
+import { selectUsuarioActivo } from 'src/app/autenticacion/state/auth.selectors';
+import { Usuario } from 'src/app/models/usuario';
 
 @Component({
   selector: 'app-lista',
@@ -35,6 +37,7 @@ export class ListaComponent {
 
   suscripcion!: Subscription;
   dataSource!: MatTableDataSource<Alumnos>;
+  usuarioActivo$!: Observable<Usuario | undefined>;
 
   constructor(
     private AlumnoListaService: AlumnoListaService,
@@ -46,26 +49,8 @@ export class ListaComponent {
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource<Alumnos>();
-    // this.cargando$ = this.store.select(selectCargandoAlumnos);
-    // console.log('cargando', this.cargando$);
-    // this.store.dispatch(cargarAlumnosStates());
-
-    // this.AlumnoListaService.obtenerAlumnosObservable().subscribe(
-    //   (alumnos: Alumnos[]) => {
-    //     this.store.dispatch(alumnosCargados({ alumnos: alumnos }));
-    //   }
-    // );
-
-    // this.Alumnos$ = this.store.select(selectAlumnosCargados);
     this.Alumnos$ = this.AlumnoListaService.obtenerAlumnosObservable();
-    // //estado de la sesion
-    // this.sesion.obtenerSesion().subscribe((sesion: Sesion) => {
-    //   console.log('Estado de la sesion', sesion);
-    //   if (!sesion.sesionActiva) {
-    //     this.router.navigate(['auth/login']); //manda al login
-    //   }
-    //   this.sesion$ = this.sesion.obtenerSesion();
-    // });
+    this.usuarioActivo$ = this.store.select(selectUsuarioActivo);
 
     this.suscripcion =
       this.AlumnoListaService.obtenerAlumnosObservable().subscribe(
@@ -73,6 +58,8 @@ export class ListaComponent {
           this.dataSource.data = alumn;
         }
       );
+
+    console.log('Usuario', selectUsuarioActivo);
   }
 
   eliminarAlumno(alumn: Alumnos) {
@@ -83,7 +70,6 @@ export class ListaComponent {
   }
 
   editarAlumno(alumn: any) {
-    console.log('lista comp', alumn);
     const dialogRef = this.dialog.open(FormularioComponent, {
       data: alumn,
     });

@@ -7,13 +7,11 @@
           <div class="right"><button mat-dialog-close="">X</button></div>
           <h1 class="titulo">Agregar Alumno</h1>
           <hr>
-          <!--<h1 mat-dialog-title>Alumno</h1>-->
           <div mat-dialog-content>
             <form [formGroup]=" formulario">
               <div class="row">
                 <div class=" col-12">
                   <div class="mb-3">
-                    <!-- <p>{{data |json}}</p>-->
                     <label for="Nombre" class="form-label">Nombre(s)</label>
                     <input formControlName="nombre" type="text" class="form-control" placeholder="Nombre" id="Nombre"
                       aria-describedby="Nombre" autocomplete="off">
@@ -57,11 +55,7 @@
             <button mat-dialog-close="" type="button" class="btn btn-success" (click)="agregar()">
               <mat-icon>save</mat-icon>&nbsp;Guardar
             </button>&nbsp;&nbsp;
-            <!--<button mat-dialog-close="" type="button" class="btn btn-success" (click)="nuevo()" (click)="enviar(data)">
-              <mat-icon>add</mat-icon>&nbsp;Nuevo
-            </button>-->
           </div>
-
         </div>
       </div>
     </div>

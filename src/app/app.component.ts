@@ -50,7 +50,6 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.sesionActiva$ = this.authStore.select(selectSesionActiva);
     this.usuarioActivo$ = this.authStore.select(selectUsuarioActivo);
-    console.log('activo', this.usuarioActivo$);
 
     this.dataSource = new MatTableDataSource<Alumnos>();
     this.suscripcion =
@@ -78,12 +77,5 @@ export class AppComponent implements OnInit {
 
   irinicio() {
     this.router.navigate(['inicio', { mensaje: 'inicio' }]);
-  }
-
-  tabla() {
-    this.router.navigate(['tabla']);
-  }
-  lista() {
-    this.router.navigate(['lista']);
   }
 }

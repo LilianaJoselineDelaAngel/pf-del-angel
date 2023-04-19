@@ -31,7 +31,6 @@ export class LoginComponent implements OnInit, OnDestroy {
       contrasena: new FormControl('Adm246'),
       esAdmin: new FormControl(true),
     });
-    console.log('authStore', this.authStore);
   }
 
   ngOnDestroy(): void {

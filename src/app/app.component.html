@@ -10,19 +10,14 @@
 
   <body>
     <ng-container *ngIf="sesionActiva$ | async as sesion">
-      <!-- <mat-toolbar color="" *ngIf="sesion.sesionActiva"><mat-toolbar color="" *ngIf="sesion.sesionActiva"> -->
       <mat-toolbar color="">
         <span><img src="https://cdn-icons-png.flaticon.com/512/855/855601.png" alt="Logo" width="35" height="30"
             class="d-inline-block align-text-top"><label class="titulo">&nbsp;&nbsp;ALUMNOS</label></span>
         <span class="example-spacer"></span>
 
-        <!-- <span> Usuario: {{sesion.Usuario}}&nbsp;&nbsp; </span> -->
         <button mat-button (click)="irinicio()"><mat-icon>home</mat-icon>&nbsp;&nbsp;Inicio</button>
-        <!-- <a mat-button routerLink="vistas/lista"><mat-icon>list</mat-icon>&nbsp;&nbsp;Lista</a>
-        <a mat-button routerLink="vistas/tabla"><mat-icon>table</mat-icon>&nbsp;&nbsp;Tabla</a> -->
-
-        <a mat-button (click)="lista()"><mat-icon>list</mat-icon>&nbsp;&nbsp;Lista</a>
-        <a mat-button (click)="tabla()"
+        <a mat-button routerLink="vistas/lista"><mat-icon>list</mat-icon>&nbsp;&nbsp;Lista</a>
+        <a mat-button routerLink="vistas/tabla"
           *ngIf="(usuarioActivo$ | async)?.esAdmin==true"><mat-icon>table</mat-icon>&nbsp;&nbsp;Tabla</a>
 
         <button mat-button (click)="formulario()"

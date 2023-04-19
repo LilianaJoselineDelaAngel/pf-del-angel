@@ -66,7 +66,6 @@ export class FormularioComponent {
   enviar(alumn: any) {
     let alumno: Alumnos = {
       id: alumn.id,
-      //id: this.formulario.value.id,
       nombre: this.formulario.value.nombre,
       apellidos: this.formulario.value.apellidos,
       curso: this.formulario.value.curso,
@@ -74,7 +73,6 @@ export class FormularioComponent {
       esperadas: 10,
       asistencia: true,
     };
-    console.log(alumno, ' nuevo');
 
     this.AlumnoListaService.editar(alumno).subscribe((alumn: Alumnos) => {
       this.Alumnos$ = this.AlumnoListaService.obtenerAlumnosObservable();

@@ -17,7 +17,6 @@ export class SesionService {
   }
 
   crearSesion(sesion: Sesion) {
-    console.log('Iniciacndo sesion', sesion);
     this.sesion$?.next(sesion);
   }
   obtenerSesion(): Observable<Sesion> {
