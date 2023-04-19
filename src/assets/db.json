@@ -1,6 +1,6 @@
 {
   "usuarios":[
-    {"usuario": "Administrador", "Contraseña": "Adm246", "esAdmin": true},
-    {"usuario": "Alumno", "Contraseña": "Almn135", "esAdmin": false}
+    {"usuario": "Administrador", "contrasena": "Adm246", "esAdmin": true},
+    {"usuario": "Alumno", "contrasena": "Almn135", "esAdmin": false}
   ]
 }

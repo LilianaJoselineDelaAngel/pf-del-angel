@@ -58,8 +58,6 @@ export class ListaComponent {
           this.dataSource.data = alumn;
         }
       );
-
-    console.log('Usuario', selectUsuarioActivo);
   }
 
   eliminarAlumno(alumn: Alumnos) {
