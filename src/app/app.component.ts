@@ -21,6 +21,8 @@ import {
 } from './autenticacion/state/auth.selectors';
 import { AuthState } from './autenticacion/state/auth.reducer';
 import { Usuario } from './models/usuario';
+import { AlumnoState } from './Alumnos/alumnos-state.reducer';
+import { cargarSesion, cerrarSesion } from './autenticacion/state/auth.actions';
 
 @Component({
   selector: 'app-root',
@@ -28,30 +30,27 @@ import { Usuario } from './models/usuario';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
+  title = 'pf-del-angel';
+  sesionActiva$!: Observable<Boolean>;
+  usuarioActivo$!: Observable<Usuario | undefined>;
+
   dataSource!: MatTableDataSource<Alumnos>;
   suscripcion!: Subscription;
   Alumnos$!: Observable<Alumnos[]>;
 
-  //sesion$!: Observable<boolean>;
-  sesionActiva$!: Observable<Boolean>;
-  usuarioActivo$!: Observable<Usuario | null>;
-
-  //dialog: any;
   constructor(
     private AlumnoListaService: AlumnoListaService,
-    private dialog: MatDialog, // public dialog: MatDialog
-
+    private dialog: MatDialog,
     private router: Router,
     private sesion: SesionService,
-    //private store: Store<AppState>,
-
-    private authStore: Store<AuthState>
+    private authStore: Store<AuthState>,
+    private store: Store<AlumnoState>
   ) {}
 
   ngOnInit(): void {
     this.sesionActiva$ = this.authStore.select(selectSesionActiva);
-    //this.usuarioActivo$ = this.authStore.select(selectUsuarioActivo);
-    // this.sesion$ = this.authStore.select(selectSesionActiva);
+    this.usuarioActivo$ = this.authStore.select(selectUsuarioActivo);
+    console.log('activo', this.usuarioActivo$);
 
     this.dataSource = new MatTableDataSource<Alumnos>();
     this.suscripcion =
@@ -60,48 +59,6 @@ export class AppComponent implements OnInit {
           this.dataSource.data = alumn;
         }
       );
-
-    // this.dataSource = new MatTableDataSource<Alumnos>();
-    // this.suscripcion =
-    //   this.AlumnoListaService.obtenerAlumnosObservable().subscribe(
-    //     (alumn: Alumnos[]) => {
-    //       this.dataSource.data = alumn;
-    //     }
-    //   );
-
-    // this.sesion$ = this.sesion.obtenerSesion();
-    //this.AlumnoListaService.obtenerAlumnosObservable().subscribe(
-    //  (Alumnos: Alumnos[]) => {
-    //  this.dataSource.data = Alumnos;
-    // }
-    //);
-  }
-
-  title = 'pf-del-angel';
-
-  nvo = null;
-  location: any;
-
-  formulario() {
-    // this.router.navigate(['formulario', { mensaje: 'formulario' }]);
-
-    // this.dataSource.data.push(alumn);
-    // console.log(alumn);
-    const dialogRef = this.dialog.open(AgregarComponent, {
-      // data: alumn,
-    });
-  }
-
-  nuevo(alumn: any) {
-    this.nvo = alumn;
-  }
-
-  irinicio() {
-    let sesion: Sesion = {
-      sesionActiva: true,
-      //usuarioActivo: undefined,
-    };
-    this.router.navigate(['inicio', { mensaje: 'inicio' }]);
   }
 
   salir() {
@@ -110,6 +67,23 @@ export class AppComponent implements OnInit {
       usuarioActivo: undefined,
     };
     this.sesion.salir(sesionSalir);
+    this.authStore.dispatch(cerrarSesion());
     this.router.navigate(['auth/login']);
+    window.location.reload();
+  }
+
+  formulario() {
+    const dialogRef = this.dialog.open(AgregarComponent, {});
+  }
+
+  irinicio() {
+    this.router.navigate(['inicio', { mensaje: 'inicio' }]);
+  }
+
+  tabla() {
+    this.router.navigate(['tabla']);
+  }
+  lista() {
+    this.router.navigate(['lista']);
   }
 }

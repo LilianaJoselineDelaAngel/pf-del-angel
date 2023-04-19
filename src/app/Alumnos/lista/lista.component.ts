@@ -29,11 +29,13 @@ import { AlumnoState } from '../alumnos-state.reducer';
 export class ListaComponent {
   Alumnos!: Alumnos;
   Alumnos$!: Observable<Alumnos[]>;
+
   sesion$!: Observable<Sesion>;
   cargando$!: Observable<boolean>;
 
-  // suscripcion!: Subscription;
-  //dataSource!: MatTableDataSource<Alumnos>;
+  suscripcion!: Subscription;
+  dataSource!: MatTableDataSource<Alumnos>;
+
   constructor(
     private AlumnoListaService: AlumnoListaService,
     public dialog: MatDialog, // public dialog: MatDialog
@@ -43,26 +45,34 @@ export class ListaComponent {
   ) {}
 
   ngOnInit(): void {
-    this.cargando$ = this.store.select(selectCargandoAlumnos);
+    this.dataSource = new MatTableDataSource<Alumnos>();
+    // this.cargando$ = this.store.select(selectCargandoAlumnos);
     // console.log('cargando', this.cargando$);
-    this.store.dispatch(cargarAlumnosStates());
+    // this.store.dispatch(cargarAlumnosStates());
 
-    this.AlumnoListaService.obtenerAlumnosObservable().subscribe(
-      (alumnos: Alumnos[]) => {
-        this.store.dispatch(alumnosCargados({ alumnos: alumnos }));
-      }
-    );
+    // this.AlumnoListaService.obtenerAlumnosObservable().subscribe(
+    //   (alumnos: Alumnos[]) => {
+    //     this.store.dispatch(alumnosCargados({ alumnos: alumnos }));
+    //   }
+    // );
 
-    this.Alumnos$ = this.store.select(selectAlumnosCargados);
-    // this.Alumnos$ = this.AlumnoListaService.obtenerAlumnosObservable();
-    //estado de la sesion
-    this.sesion.obtenerSesion().subscribe((sesion: Sesion) => {
-      console.log('Estado de la sesion', sesion);
-      if (!sesion.sesionActiva) {
-        this.router.navigate(['auth/login']); //manda al login
-      }
-      this.sesion$ = this.sesion.obtenerSesion();
-    });
+    // this.Alumnos$ = this.store.select(selectAlumnosCargados);
+    this.Alumnos$ = this.AlumnoListaService.obtenerAlumnosObservable();
+    // //estado de la sesion
+    // this.sesion.obtenerSesion().subscribe((sesion: Sesion) => {
+    //   console.log('Estado de la sesion', sesion);
+    //   if (!sesion.sesionActiva) {
+    //     this.router.navigate(['auth/login']); //manda al login
+    //   }
+    //   this.sesion$ = this.sesion.obtenerSesion();
+    // });
+
+    this.suscripcion =
+      this.AlumnoListaService.obtenerAlumnosObservable().subscribe(
+        (alumn: Alumnos[]) => {
+          this.dataSource.data = alumn;
+        }
+      );
   }
 
   eliminarAlumno(alumn: Alumnos) {

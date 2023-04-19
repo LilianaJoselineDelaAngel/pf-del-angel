@@ -18,9 +18,15 @@
 
         <!-- <span> Usuario: {{sesion.Usuario}}&nbsp;&nbsp; </span> -->
         <button mat-button (click)="irinicio()"><mat-icon>home</mat-icon>&nbsp;&nbsp;Inicio</button>
-        <a mat-button routerLink="vistas/lista"><mat-icon>list</mat-icon>&nbsp;&nbsp;Lista</a>
-        <a mat-button routerLink="vistas/tabla"><mat-icon>table</mat-icon>&nbsp;&nbsp;Tabla</a>
-        <button mat-button (click)="formulario()" *ngIf="(usuarioActivo$ | async)?.esAdmin"><mat-icon>add</mat-icon>
+        <!-- <a mat-button routerLink="vistas/lista"><mat-icon>list</mat-icon>&nbsp;&nbsp;Lista</a>
+        <a mat-button routerLink="vistas/tabla"><mat-icon>table</mat-icon>&nbsp;&nbsp;Tabla</a> -->
+
+        <a mat-button (click)="lista()"><mat-icon>list</mat-icon>&nbsp;&nbsp;Lista</a>
+        <a mat-button (click)="tabla()"
+          *ngIf="(usuarioActivo$ | async)?.esAdmin==true"><mat-icon>table</mat-icon>&nbsp;&nbsp;Tabla</a>
+
+        <button mat-button (click)="formulario()"
+          *ngIf="(usuarioActivo$ | async)?.esAdmin==true"><mat-icon>add</mat-icon>
           Nuevo</button>
 
         <a mat-button (click)="salir()"><mat-icon>close</mat-icon>&nbsp;&nbsp;Cerrar sesion</a>

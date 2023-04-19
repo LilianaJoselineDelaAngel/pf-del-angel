@@ -35,10 +35,10 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title '3PF-Del-Angel'`, () => {
+  it(`should have as title 'pf-del-angel'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('3PF-Del-Angel');
+    expect(app.title).toEqual('pf-del-angel');
   });
 
   it('should render title', () => {
@@ -46,7 +46,7 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('.content span')?.textContent).toContain(
-      '3PF-Del-Angel app is running!'
+      'pf-del-angel app is running!'
     );
   });
 });

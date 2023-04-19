@@ -9,6 +9,7 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 import { Observable, Subscription } from 'rxjs';
+import { Sesion } from 'src/app/models/sesion';
 
 @Component({
   selector: 'app-tabla',
@@ -18,6 +19,7 @@ import { Observable, Subscription } from 'rxjs';
 export class TablaComponent {
   Alumnos!: Alumnos;
   Alumnos$!: Observable<Alumnos[]>;
+  sesion$!: Observable<Sesion>;
 
   dataSource!: MatTableDataSource<Alumnos>;
   suscripcion!: Subscription;
@@ -62,39 +64,6 @@ export class TablaComponent {
       data: alumn,
     });
     //this.tabla.renderRows();
-  }
-
-  // eliminar(alumn: any) {
-  //   this.AlumnoListaService.eliminar(alumn);
-  //   //this.tabla.renderRows();
-  // }
-
-  vacio = {
-    nombre: '',
-    apellidos: '',
-    curso: '',
-    tareas: 0,
-    esperadas: 10,
-    asistencia: true,
-  };
-
-  nuevo(alumn: any) {
-    this.dataSource.data.push(alumn);
-    console.log(alumn);
-    const dialogRef = this.dialog.open(FormularioComponent, {
-      data: alumn,
-    });
-    // this.tabla.renderRows();
-
-    //limpia los campos para el registro siguiente
-    this.vacio = {
-      nombre: '',
-      apellidos: '',
-      curso: '',
-      tareas: 0,
-      esperadas: 10,
-      asistencia: true,
-    };
   }
 
   // filtrar(event: Event) {

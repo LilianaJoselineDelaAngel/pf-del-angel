@@ -5,6 +5,9 @@ export const cargarSesion = createAction(
   '[Auth] Sesion cargada',
   props<{ sesion: Sesion }>()
 );
+
+export const cerrarSesion = createAction('[Auth]  Cerrar sesion');
+
 // export function cargarAuths(
 //   cargarAuths: any,
 //   arg1: (
