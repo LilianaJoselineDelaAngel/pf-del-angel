@@ -32,6 +32,7 @@ export class LoginService {
             sesionActiva: false,
           };
 
+          window.location.reload();
           return sesion;
         }
       })

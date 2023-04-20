@@ -12,11 +12,11 @@
     <ng-container *ngIf="sesionActiva$ | async as sesion">
       <mat-toolbar color="">
         <span><img src="https://cdn-icons-png.flaticon.com/512/855/855601.png" alt="Logo" width="35" height="30"
-            class="d-inline-block align-text-top"><label class="titulo">&nbsp;&nbsp;ALUMNOS</label></span>
-        <button mat-button (click)="irinicio()"><mat-icon>home</mat-icon>&nbsp;&nbsp;Inicio</button>
-        <a mat-button routerLink="vistas/lista"><mat-icon>list</mat-icon>&nbsp;&nbsp;Lista</a>
+            class="d-inline-block align-text-top"><label class="titulo">ALUMNOS</label></span>
+        <button mat-button (click)="irinicio()"><mat-icon>home</mat-icon>Inicio</button>
+        <a mat-button routerLink="vistas/lista"><mat-icon>list</mat-icon>Lista</a>
         <a mat-button routerLink="vistas/tabla"
-          *ngIf="(usuarioActivo$ | async)?.esAdmin==true"><mat-icon>table</mat-icon>&nbsp;&nbsp;Tabla</a>
+          *ngIf="(usuarioActivo$ | async)?.esAdmin==true"><mat-icon>table</mat-icon>Tabla</a>
         <button mat-button (click)="formulario()"
           *ngIf="(usuarioActivo$ | async)?.esAdmin==true"><mat-icon>add</mat-icon>
           Nuevo</button>
